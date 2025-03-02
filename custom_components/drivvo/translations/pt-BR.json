@@ -2,9 +2,10 @@
   "config": {
     "step": {
       "user": {
+        "title": "Conectar ao Drivvo",
         "description": "Entre com as informações da sua conta:",
         "data": {
-          "email": "E-mail",
+          "email": "Email",
           "password": "Senha"
         }
       },
@@ -22,10 +23,13 @@
       }
     },
     "error": {
-      "auth_error": "Autenticação inválida"
+      "auth_error": "Autenticação inválida",
+      "cannot_connect": "Falha na conexão",
+      "invalid_auth": "Autenticação inválida",
+      "unknown": "Erro inesperado"
     },
     "abort": {
-      "already_configured": "Esta conta já está configurada.",
+      "already_configured": "Conta já configurada",
       "reauth_successful": "Reautenticação realizada com sucesso."
     }
   },
@@ -34,80 +38,146 @@
       "refuellings": {
         "name": "Abastecimentos",
         "state_attributes": {
-          "veiculo": {
-            "name": "Veículo"
+          "vehicle": {
+            "name": "Vehicle"
           },
-          "odometro":  {
-            "name": "Último odômetro"
+          "odometer": {
+            "name": "Last odometer"
           },
-          "data_odometro":  {
-            "name": "Data do último odômetro"
+          "odometer_date": {
+            "name": "Date of last odometer"
           },
-          "ultima_media":  {
-            "name": "Última média de combustível"
+          "refuelling_last_average": {
+            "name": "Last fuel average"
           },
-          "media_geral":  {
-            "name": "Média geral de combustível"
+          "refuelling_general_average": {
+            "name": "General fuel average"
           },
-          "posto":  {
-            "name": "Posto de combustível"
+          "refuelling_station": {
+            "name": "Fuel station"
           },
-          "tipo_de_combustivel":  {
-            "name": "Tipo de Combustível"
+          "refuelling_type": {
+            "name": "Type of fuel"
           },
-          "motivo_do_abastecimento":  {
-            "name": "Motivo do reabastecimento"
+          "refuelling_reason": {
+            "name": "Refuelling reason"
           },
-          "data_do_abastecimento":  {
-            "name": "Data do reabastecimento"
+          "refuelling_date": {
+            "name": "Date refuelling"
           },
-          "valor_total_pago":  {
-            "name": "Valor do reabastecimento"
+          "refuelling_value": {
+            "name": "Value refuelling"
           },
-          "preco_do_combustivel":  {
-            "name": "Preço do combustível"
+          "refuelling_price": {
+            "name": "Fuel price"
           },
-          "soma_total_de_abastecimentos":  {
-            "name": "Total de abastecimentos"
+          "refuelling_total": {
+            "name": "Total refuellings"
           },
-          "soma_total_de_valores_pagos_em_todos_os_abastecimentos":  {
-            "name": "Valor total dos abastecimentos"
+          "refuelling_value_total": {
+            "name": "Total value refuellings"
           },
-          "encheu_o_tanque":  {
-            "name": "Encheu o tanque",
+          "refuelling_tank_full": {
+            "name": "Tank full",
             "state": {
-              "false": "Não",
-              "true": "Sim"
+              "false": "No",
+              "true": "Yes"
             }
           },
-          "km_percorridos_desde_o_ultimo_abastecimento":  {
-            "name": "Distância percorrida desde o último abastecimento"
+          "refuelling_distance": {
+            "name": "Distance traveled since the last refueling"
           },
-          "gasolina_mais_barata_ate_entao":  {
-            "name": "Combustível mais barato"
+          "refuelling_price_lowest": {
+            "name": "Cheaper fuel"
           },
-          "refuelling_volume":  {
-            "name": "Volume do último abastecimento"
+          "refuelling_volume": {
+            "name": "Last refueling volume"
           },
-          "refuelling_volume_total":  {
-            "name": "Volume total dos abastecimentos"
+          "refuelling_volume_total": {
+            "name": "Total volume refuelings"
           }
         }
+      },
+      "refuelling_total": {
+        "name": "Total de abastecimentos"
+      },
+      "vehicle": {
+        "name": "Veículo"
+      },
+      "odometer": {
+        "name": "Odômetro"
+      },
+      "odometer_date": {
+        "name": "Data do odômetro"
+      },
+      "refuelling_last_average": {
+        "name": "Última média de combustível"
+      },
+      "refuelling_general_average": {
+        "name": "Média geral de combustível"
+      },
+      "refuelling_station": {
+        "name": "Posto de combustível"
+      },
+      "refuelling_type": {
+        "name": "Tipo de combustível"
+      },
+      "refuelling_reason": {
+        "name": "Motivo do abastecimento"
+      },
+      "refuelling_date": {
+        "name": "Data do abastecimento"
+      },
+      "refuelling_value": {
+        "name": "Valor do abastecimento"
+      },
+      "refuelling_price": {
+        "name": "Preço do combustível"
+      },
+      "refuelling_value_total": {
+        "name": "Valor total dos abastecimentos"
+      },
+      "refuelling_tank_full": {
+        "name": "Tanque cheio"
+      },
+      "refuelling_distance": {
+        "name": "Distância percorrida desde o último abastecimento"
+      },
+      "refuelling_price_lowest": {
+        "name": "Combustível mais barato"
+      },
+      "refuelling_volume": {
+        "name": "Volume do último abastecimento"
+      },
+      "refuelling_volume_total": {
+        "name": "Volume total dos abastecimentos"
+      },
+      "odometer_value": {
+        "name": "Valor do odômetro"
+      },
+      "odometer_avg_consumption": {
+        "name": "Consumo médio"
+      },
+      "expenses": {
+        "name": "Despesas"
+      },
+      "expenses_unic": {
+        "name": "Despesas únicas"
       }
     }
   },
   "issues": {
     "yaml_deprecated": {
-      "title": "A configuração YAML para o Drivvo está depreciada",
-      "description": "A configuração YAML para o Drivvo está depreciada.\n\nSua configuração foi importada para a IU e pode ser removida do arquivo `configuration.yaml`."
+      "title": "A configuração YAML do Drivvo está sendo removida",
+      "description": "A configuração do Drivvo usando YAML está sendo removida. Sua configuração YAML existente foi importada para a interface automaticamente. Remova a configuração YAML do Drivvo do seu arquivo configuration.yaml para resolver este problema."
     },
     "import_already_configured": {
       "title": "A configuração da conta {email} já existe",
       "description": "A configuração da conta {email} já existe e por isso não foi importada.\n\nVocê pode remover a configuração do seu arquivo `configuration.yaml`."
     },
     "vehicle_non_existent": {
-      "title": "O veículo ID {vehicle} não existe no aplicativo Drivvo",
-      "description": "O veículo {vehicle} não existe, ele pode ter sido excluído.\n\nAcesse as opções de configuração da integração e remova o veículo."
+      "title": "Veículo não encontrado",
+      "description": "O veículo {vehicle} não pôde ser encontrado na sua conta Drivvo."
     }
   },
   "options": {
@@ -121,7 +191,7 @@
         }
       }
     },
-    "abort":{
+    "abort": {
       "changes_successful": "Alterações salvas com sucesso."
     },
     "error": {

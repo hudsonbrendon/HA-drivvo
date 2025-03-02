@@ -2,7 +2,8 @@
   "domain": "drivvo",
   "name": "Drivvo",
   "codeowners": [
-    "@hudsonbrendon", "@dougiteixeira"
+    "@hudsonbrendon",
+    "@dougiteixeira"
   ],
   "config_flow": true,
   "dependencies": [],
@@ -10,5 +11,5 @@
   "iot_class": "cloud_polling",
   "issue_tracker": "https://github.com/hudsonbrendon/sensor.drivvo/issues",
   "requirements": [],
-  "version": "1.1.1"
+  "version": "2.0.0"
 }

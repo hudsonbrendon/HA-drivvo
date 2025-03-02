@@ -2,6 +2,7 @@
   "config": {
     "step": {
       "user": {
+        "title": "Conectar a Drivvo",
         "description": "Introduzca las credenciales de tu cuenta:",
         "data": {
           "email": "E-mail",
@@ -22,7 +23,10 @@
       }
     },
     "error": {
-      "auth_error": "Autenticación incorrecta"
+      "auth_error": "Autenticación incorrecta",
+      "cannot_connect": "Error al conectar",
+      "invalid_auth": "Autenticación incorrecta",
+      "unknown": "Error inesperado"
     },
     "abort": {
       "already_configured": "Esta cuenta ya ha sido configurada.",
@@ -34,65 +38,128 @@
       "refuellings": {
         "name": "Repostajes",
         "state_attributes": {
-          "veiculo": {
+          "vehicle": {
             "name": "Vehículo"
           },
-          "odometro":  {
+          "odometer": {
             "name": "Último cuentakilómetros"
           },
-          "data_odometro":  {
+          "odometer_date": {
             "name": "Fecha del último cuentakilómetros"
           },
-          "ultima_media":  {
+          "refuelling_last_average": {
             "name": "Última media de combustible"
           },
-          "media_geral":  {
+          "refuelling_general_average": {
             "name": "Media general de combustible"
           },
-          "posto":  {
+          "refuelling_station": {
             "name": "Estación de servicio"
           },
-          "tipo_de_combustivel":  {
+          "refuelling_type": {
             "name": "Tipo de combustible"
           },
-          "motivo_do_abastecimento":  {
+          "refuelling_reason": {
             "name": "Razón de repostaje"
           },
-          "data_do_abastecimento":  {
+          "refuelling_date": {
             "name": "Fecha de repostaje"
           },
-          "valor_total_pago":  {
+          "refuelling_value": {
             "name": "Costo del repostaje"
           },
-          "preco_do_combustivel":  {
+          "refuelling_price": {
             "name": "Precio del combustible"
           },
-          "soma_total_de_abastecimentos":  {
+          "refuelling_total": {
             "name": "Total de repostajes"
           },
-          "soma_total_de_valores_pagos_em_todos_os_abastecimentos":  {
+          "refuelling_value_total": {
             "name": "Costo total de repostajes"
           },
-          "encheu_o_tanque":  {
+          "refuelling_tank_full": {
             "name": "Tanque lleno",
             "state": {
               "false": "No",
               "true": "Si"
             }
           },
-          "km_percorridos_desde_o_ultimo_abastecimento":  {
+          "refuelling_distance": {
             "name": "Distancia recorrida desde el último repostaje"
           },
-          "gasolina_mais_barata_ate_entao":  {
+          "refuelling_price_lowest": {
             "name": "Precio de combustible más barato"
           },
-          "refuelling_volume":  {
+          "refuelling_volume": {
             "name": "Volumen del último repostaje"
           },
-          "refuelling_volume_total":  {
+          "refuelling_volume_total": {
             "name": "Volumen del total de repostajes"
           }
         }
+      },
+      "vehicle": {
+        "name": "Vehículo"
+      },
+      "odometer": {
+        "name": "Cuentakilómetros"
+      },
+      "odometer_date": {
+        "name": "Fecha del cuentakilómetros"
+      },
+      "refuelling_last_average": {
+        "name": "Última media de combustible"
+      },
+      "refuelling_general_average": {
+        "name": "Media general de combustible"
+      },
+      "refuelling_station": {
+        "name": "Estación de servicio"
+      },
+      "refuelling_type": {
+        "name": "Tipo de combustible"
+      },
+      "refuelling_reason": {
+        "name": "Razón de repostaje"
+      },
+      "refuelling_date": {
+        "name": "Fecha de repostaje"
+      },
+      "refuelling_value": {
+        "name": "Costo del repostaje"
+      },
+      "refuelling_price": {
+        "name": "Precio del combustible"
+      },
+      "refuelling_value_total": {
+        "name": "Costo total de repostajes"
+      },
+      "refuelling_tank_full": {
+        "name": "Tanque lleno"
+      },
+      "refuelling_distance": {
+        "name": "Distancia recorrida desde el último repostaje"
+      },
+      "refuelling_price_lowest": {
+        "name": "Combustible más barato"
+      },
+      "refuelling_volume": {
+        "name": "Volumen del último repostaje"
+      },
+      "refuelling_volume_total": {
+        "name": "Volumen total de repostajes"
+      },
+      "odometer_value": {
+        "name": "Valor del cuentakilómetros"
+      },
+      "odometer_avg_consumption": {
+        "name": "Consumo medio"
+      },
+      "expenses": {
+        "name": "Gastos"
+      },
+      "expenses_unic": {
+        "name": "Gastos únicos"
       }
     }
   },
@@ -106,8 +173,8 @@
       "description": "La cuenta {email} ya existe y por tanto no ha sido importada.\n\nPuede eliminar la configuración del archivo `configuration.yaml`."
     },
     "vehicle_non_existent": {
-      "title": "El vehículo con ID {vehicle} no exixte en la aplicación de Drivvo",
-      "description": "El vehículo con ID {vehicle} no exixte en la aplicación de Drivvo, puede haber sido borrado.\n\nVaya a las opciones de configuración de la integración y elimine el vehículo."
+      "title": "El vehículo con ID {vehicle} no existe en la aplicación de Drivvo",
+      "description": "El vehículo con ID {vehicle} no existe en la aplicación de Drivvo, puede haber sido borrado.\n\nVaya a las opciones de configuración de la integración y elimine el vehículo."
     }
   },
   "options": {
@@ -121,7 +188,7 @@
         }
       }
     },
-    "abort":{
+    "abort": {
       "changes_successful": "Cambios correctamente guardados."
     },
     "error": {
