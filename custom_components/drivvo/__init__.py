@@ -141,14 +141,14 @@ async def get_data_vehicle(hass, user, password, id_vehicle):
         response_config = await hass.async_add_executor_job(get)
         if response_config.ok:
             api_data_config = response_config.json()
+            api_data_config = api_data_config[0]
         else:
             api_data_config = None
 
-        currency = api_data_config[0].get("formato_valor", None)
+        currency = api_data_config.get("formato_valor", None)
 
         _LOGGER.debug(
             "API Response config: %s (currency=%s)",
-            id_vehicle,
             api_data_config,
             currency,
         )
