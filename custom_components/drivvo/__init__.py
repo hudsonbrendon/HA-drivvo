@@ -102,7 +102,25 @@ async def auth(
 
     return False
 
+async def get_currency(
+    hass,
+    token: bool | None = False,
+) -> bool:
+    def get():
+        return requests.get(
+            "https://api.drivvo.com/configuracao",
+            headers={"x-token": token},
+        )
 
+    response = await hass.async_add_executor_job(get)
+    _LOGGER.debug("API Response config: %s", response.json())
+
+    if response.ok:
+        if "formarto_valor" in (config := response.json()):
+            currency = config.get("formato_valor", "USD")
+        return currency
+    return "USD"
+    
 async def get_vehicles(
     hass,
     token: bool | None = False,
@@ -119,7 +137,6 @@ async def get_vehicles(
     if response.ok:
         return response.json()
     return None
-
 
 async def get_data_vehicle(hass, user, password, id_vehicle):
     """Get The request from the api."""
