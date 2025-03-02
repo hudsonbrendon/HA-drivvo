@@ -152,15 +152,15 @@ series:
     unit: km
   - entity: sensor.refuelling_price
     name: Fuel Price
-    unit: €
+    unit: $
     float_precision: 2
   - entity: sensor.refuelling_value
     name: Refuelling Cost
-    unit: €
+    unit: $
     float_precision: 2
   - entity: sensor.refuelling_value_total
     name: Total Cost
-    unit: €
+    unit: $
     float_precision: 2
   - entity: sensor.refuelling_distance
     name: Distance Between Refuellings
