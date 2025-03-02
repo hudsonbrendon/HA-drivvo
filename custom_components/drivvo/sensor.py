@@ -184,7 +184,7 @@ class DrivvoSensorEntity(CoordinatorEntity, SensorEntity):
             name=vehicle_name,
             manufacturer="Drivvo",
             model=f"{coordinator.data.manufacturer}/{coordinator.data.model}",
-            sw_version="1.1.1",
+            sw_version="2.0.0",
         )
 
     @property
