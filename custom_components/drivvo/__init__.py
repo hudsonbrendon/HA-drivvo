@@ -137,22 +137,6 @@ async def get_data_vehicle(hass, user, password, id_vehicle):
         token=True,
     )
     if token:
-        url = BASE_URL.format(f"configuracao")
-        response_config = await hass.async_add_executor_job(get)
-        if response_config.ok:
-            api_data_config = response_config.json()
-            api_data_config = api_data_config[0]
-        else:
-            api_data_config = None
-
-        currency = api_data_config.get("formato_valor", None)
-
-        _LOGGER.debug(
-            "API Response config: %s (currency=%s)",
-            api_data_config,
-            currency,
-        )
-
         url = BASE_URL.format(f"veiculo/{id_vehicle}")
         response_vehicle = await hass.async_add_executor_job(get)
         if response_vehicle.ok:
@@ -230,6 +214,7 @@ async def get_data_vehicle(hass, user, password, id_vehicle):
         refuelling_price_lowest = None
         refuelling_volume = None
         refuelling_volume_total = None
+        currency = None
 
         refuellings_odometers = []
         if len(api_data_refuellings) > 0:
@@ -379,6 +364,23 @@ async def get_data_vehicle(hass, user, password, id_vehicle):
         if len(odometers) > 0:
             odometer_last = odometers[0]["odometro"]
             odometer_date_last = odometers[0]["data"]
+
+        url = BASE_URL.format("configuracao")
+        response_config = await hass.async_add_executor_job(get)
+        if response_config.ok:
+            api_data_config = response_config.json()
+            api_data_config = api_data_config[0]
+        else:
+            api_data_config = None
+
+        if api_data_config is not None:
+            currency = api_data_config.get("formato_valor", None)
+
+        _LOGGER.debug(
+            "API Response config: %s (currency=%s)",
+            api_data_config,
+            currency,
+        )
 
         data_return = DrivvoDataVehicle(
             id=id_vehicle,
