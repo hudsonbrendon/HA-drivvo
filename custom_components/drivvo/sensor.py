@@ -1,15 +1,25 @@
 import logging
-from typing import Any, Dict
+from typing import Any
+from datetime import datetime
+import pytz
 
-import voluptuous as vol
+import voluptuous as vol  # Add this import which was missing
 
 from homeassistant import config_entries, core
-from homeassistant.components.sensor import PLATFORM_SCHEMA
+from homeassistant.components.sensor import (
+    PLATFORM_SCHEMA,
+    SensorEntity,
+    SensorDeviceClass,
+)
 from homeassistant.const import STATE_UNKNOWN
 import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers import device_registry as dr
-from homeassistant.helpers.entity import DeviceInfo, Entity
+from homeassistant.helpers.entity import DeviceInfo
 from homeassistant.helpers.issue_registry import IssueSeverity, async_create_issue
+from homeassistant.helpers.update_coordinator import (
+    CoordinatorEntity,
+    DataUpdateCoordinator,
+)
 
 from . import get_data_vehicle
 from .const import (
@@ -22,6 +32,7 @@ from .const import (
     ICON,
     SCAN_INTERVAL,
 )
+from .sensors import SENSOR_TYPES, DrivvoSensorEntityDescription
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -42,6 +53,7 @@ async def async_setup_entry(
 ) -> None:
     """Setup sensor platform."""
     config = hass.data[DOMAIN][config_entry.entry_id]
+    entities = []
 
     for vehicle in config[CONF_VEHICLES]:
         if (
@@ -52,18 +64,45 @@ async def async_setup_entry(
                 id_vehicle=vehicle,
             )
         ) is not None:
-            async_add_entities(
-                [
-                    DrivvoSensor(
-                        hass,
-                        config[CONF_EMAIL],
-                        config[CONF_PASSWORD],
-                        vehicle_data,
-                        SCAN_INTERVAL,
-                    )
-                ],
-                update_before_add=True,
+            # Create coordinator for data updates
+            coordinator = DataUpdateCoordinator(
+                hass,
+                _LOGGER,
+                name=f"Drivvo {vehicle_data.identification}",
+                update_interval=SCAN_INTERVAL,
+                update_method=lambda: get_data_vehicle(
+                    hass,
+                    user=config[CONF_EMAIL],
+                    password=config[CONF_PASSWORD],
+                    id_vehicle=vehicle,
+                ),
             )
+
+            # Fetch initial data
+            await coordinator.async_config_entry_first_refresh()
+
+            # Create sensor entities
+            for description in SENSOR_TYPES:
+                if description.key == "vehicle":
+                    model = f"{vehicle_data.manufacturer}/{vehicle_data.model}"
+                    entities.append(
+                        DrivvoSensorEntity(
+                            coordinator,
+                            description,
+                            vehicle_data.id,
+                            vehicle_data.identification,
+                            model,
+                        )
+                    )
+                else:
+                    entities.append(
+                        DrivvoSensorEntity(
+                            coordinator,
+                            description,
+                            vehicle_data.id,
+                            vehicle_data.identification,
+                        )
+                    )
         else:
             async_create_issue(
                 hass,
@@ -76,6 +115,8 @@ async def async_setup_entry(
                     "vehicle": vehicle,
                 },
             )
+
+    async_add_entities(entities)
 
 
 async def async_setup_platform(
@@ -110,69 +151,76 @@ async def async_setup_platform(
     return True
 
 
-class DrivvoSensor(Entity):
-    def __init__(self, hass, email, password, data, interval) -> None:
-        """Inizialize sensor."""
-        self._attr_unique_id = f"{data.id}_refuellings"
+class DrivvoSensorEntity(CoordinatorEntity, SensorEntity):
+    """Representation of a Drivvo sensor."""
+
+    entity_description: DrivvoSensorEntityDescription
+
+    def __init__(
+        self,
+        coordinator: DataUpdateCoordinator,
+        description: DrivvoSensorEntityDescription,
+        vehicle_id: str,
+        vehicle_name: str,
+        model: str = None,
+    ) -> None:
+        """Initialize the sensor entity."""
+        super().__init__(coordinator)
+        self.entity_description = description
+        self._vehicle_id = vehicle_id
+        self._vehicle_name = vehicle_name
+        self._model = model
+
+        # Set unique ID
+        self._attr_unique_id = f"{vehicle_id}_{description.key}"
+
+        # Set entity name
         self._attr_has_entity_name = True
-        self._attr_translation_key = "refuellings"
-        self._state = STATE_UNKNOWN
-        self._hass = hass
-        self._interval = interval
-        self._email = email
-        self._password = password
-        self._model = f"{data.manufacturer}/{data.model}"
-        self._id_vehicle = data.id
+
+        # Set device info
         self._attr_device_info = DeviceInfo(
-            entry_type=dr.DeviceEntryType.SERVICE,
-            identifiers={(DOMAIN, data.id)},
-            name=data.identification,
+            entry_type=dr.DeviceEntryType.SERVICE,  # Changed back from DEVICE to SERVICE
+            identifiers={(DOMAIN, vehicle_id)},
+            name=vehicle_name,
             manufacturer="Drivvo",
-            model=self._model,
-            sw_version="1.1.1",
+            model=f"{coordinator.data.manufacturer}/{coordinator.data.model}",
+            sw_version="2.0.0",
         )
-        self.data = data
+
+    @property
+    def native_value(self) -> Any:
+        """Return the sensor value."""
+        if self.coordinator.data is None:
+            return STATE_UNKNOWN
+
+        if self.entity_description.key == "vehicle" and self._model:
+            return self._model
+
+        try:
+            if self.entity_description.value_fn:
+                value = self.entity_description.value_fn(self.coordinator.data)
+
+                # Convert string timestamps to datetime objects with timezone
+                if (
+                    self.entity_description.device_class == SensorDeviceClass.TIMESTAMP
+                    and isinstance(value, str)
+                ):
+                    try:
+                        # Parse the datetime string and make it timezone-aware
+                        dt_obj = datetime.strptime(value, "%Y-%m-%d %H:%M:%S")
+                        return dt_obj.replace(tzinfo=pytz.UTC)
+                    except ValueError as e:
+                        _LOGGER.error(f"Error parsing timestamp '{value}': {e}")
+                        return STATE_UNKNOWN
+
+                return value
+        except (KeyError, AttributeError) as e:
+            _LOGGER.error(f"Error getting value for {self.entity_description.key}: {e}")
+            return STATE_UNKNOWN
+
+        return STATE_UNKNOWN
 
     @property
     def icon(self) -> str:
-        """Return the default icon."""
-        return ICON
-
-    @property
-    def state(self) -> int:
-        """Returns the number of supplies so far."""
-        return self.data.refuelling_total
-
-    @property
-    def extra_state_attributes(self) -> Dict[str, Any]:
-        """Attributes."""
-
-        return {
-            "veiculo": self._model,
-            "odometro": self.data.odometer,
-            "data_odometro": self.data.odometer_date,
-            "ultima_media": self.data.refuelling_last_average,
-            "media_geral": self.data.refuelling_general_average,
-            "posto": self.data.refuelling_station,
-            "tipo_de_combustivel": self.data.refuelling_type,
-            "motivo_do_abastecimento": self.data.refuelling_reason,
-            "data_do_abastecimento": self.data.refuelling_date,
-            "valor_total_pago": self.data.refuelling_value,
-            "preco_do_combustivel": self.data.refuelling_price,
-            "soma_total_de_abastecimentos": self.data.refuelling_total,
-            "soma_total_de_valores_pagos_em_todos_os_abastecimentos": self.data.refuelling_value_total,
-            "encheu_o_tanque": self.data.refuelling_tank_full,
-            "km_percorridos_desde_o_ultimo_abastecimento": self.data.refuelling_distance,
-            "gasolina_mais_barata_ate_entao": self.data.refuelling_price_lowest,
-            "refuelling_volume": self.data.refuelling_volume,
-            "refuelling_volume_total": self.data.refuelling_volume_total,
-        }
-
-    async def async_update(self) -> None:
-        """Updates the data by making a request to the API."""
-        self.data = await get_data_vehicle(
-            hass=self.hass,
-            user=self._email,
-            password=self._password,
-            id_vehicle=self._id_vehicle,
-        )
+        """Return the icon."""
+        return self.entity_description.icon or ICON

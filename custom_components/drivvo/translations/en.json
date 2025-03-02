@@ -2,9 +2,10 @@
   "config": {
     "step": {
       "user": {
+        "title": "Connect to Drivvo",
         "description": "Enter your account information:",
         "data": {
-          "email": "E-mail",
+          "email": "Email",
           "password": "Password"
         }
       },
@@ -22,10 +23,13 @@
       }
     },
     "error": {
-      "auth_error": "Invalid authentication"
+      "auth_error": "Invalid authentication",
+      "cannot_connect": "Failed to connect",
+      "invalid_auth": "Invalid authentication",
+      "unknown": "Unexpected error"
     },
     "abort": {
-      "already_configured": "This account is already set up.",
+      "already_configured": "Account is already configured",
       "reauth_successful": "Reauthentication successful."
     }
   },
@@ -34,80 +38,146 @@
       "refuellings": {
         "name": "Refuellings",
         "state_attributes": {
-          "veiculo": {
+          "vehicle": {
             "name": "Vehicle"
           },
-          "odometro":  {
+          "odometer": {
             "name": "Last odometer"
           },
-          "data_odometro":  {
+          "odometer_date": {
             "name": "Date of last odometer"
           },
-          "ultima_media":  {
+          "refuelling_last_average": {
             "name": "Last fuel average"
           },
-          "media_geral":  {
+          "refuelling_general_average": {
             "name": "General fuel average"
           },
-          "posto":  {
+          "refuelling_station": {
             "name": "Fuel station"
           },
-          "tipo_de_combustivel":  {
+          "refuelling_type": {
             "name": "Type of fuel"
           },
-          "motivo_do_abastecimento":  {
+          "refuelling_reason": {
             "name": "Refuelling reason"
           },
-          "data_do_abastecimento":  {
+          "refuelling_date": {
             "name": "Date refuelling"
           },
-          "valor_total_pago":  {
+          "refuelling_value": {
             "name": "Value refuelling"
           },
-          "preco_do_combustivel":  {
+          "refuelling_price": {
             "name": "Fuel price"
           },
-          "soma_total_de_abastecimentos":  {
+          "refuelling_total": {
             "name": "Total refuellings"
           },
-          "soma_total_de_valores_pagos_em_todos_os_abastecimentos":  {
+          "refuelling_value_total": {
             "name": "Total value refuellings"
           },
-          "encheu_o_tanque":  {
+          "refuelling_tank_full": {
             "name": "Tank full",
             "state": {
               "false": "No",
               "true": "Yes"
             }
           },
-          "km_percorridos_desde_o_ultimo_abastecimento":  {
+          "refuelling_distance": {
             "name": "Distance traveled since the last refueling"
           },
-          "gasolina_mais_barata_ate_entao":  {
+          "refuelling_price_lowest": {
             "name": "Cheaper fuel"
           },
-          "refuelling_volume":  {
+          "refuelling_volume": {
             "name": "Last refueling volume"
           },
-          "refuelling_volume_total":  {
+          "refuelling_volume_total": {
             "name": "Total volume refuelings"
           }
         }
+      },
+      "refuelling_total": {
+        "name": "Refuelling Total"
+      },
+      "vehicle": {
+        "name": "Vehicle"
+      },
+      "odometer": {
+        "name": "Odometer"
+      },
+      "odometer_date": {
+        "name": "Odometer Date"
+      },
+      "refuelling_last_average": {
+        "name": "Refuelling Last Average"
+      },
+      "refuelling_general_average": {
+        "name": "Refuelling General Average"
+      },
+      "refuelling_station": {
+        "name": "Refuelling Station"
+      },
+      "refuelling_type": {
+        "name": "Refuelling Type"
+      },
+      "refuelling_reason": {
+        "name": "Refuelling Reason"
+      },
+      "refuelling_date": {
+        "name": "Refuelling Date"
+      },
+      "refuelling_value": {
+        "name": "Refuelling Value"
+      },
+      "refuelling_price": {
+        "name": "Refuelling Price"
+      },
+      "refuelling_value_total": {
+        "name": "Refuelling Value Total"
+      },
+      "refuelling_tank_full": {
+        "name": "Refuelling Tank Full"
+      },
+      "refuelling_distance": {
+        "name": "Refuelling Distance"
+      },
+      "refuelling_price_lowest": {
+        "name": "Refuelling Price Lowest"
+      },
+      "refuelling_volume": {
+        "name": "Refuelling Volume"
+      },
+      "refuelling_volume_total": {
+        "name": "Refuelling Volume Total"
+      },
+      "odometer_value": {
+        "name": "Odometer value"
+      },
+      "odometer_avg_consumption": {
+        "name": "Odometer average consumption"
+      },
+      "expenses": {
+        "name": "Expenses"
+      },
+      "expenses_unic": {
+        "name": "Expenses unique"
       }
     }
   },
   "issues": {
     "yaml_deprecated": {
-      "title": "Configuration of the Drivvo in YAML is deprecated",
-      "description": "Configuration of Drivvo integration via YAML is deprecated.\n\nYour configuration has been imported into the UI and can be removed from the `configuration.yaml` file and restart Home Assistant."
+      "title": "Drivvo YAML configuration is being removed",
+      "description": "Configuring Drivvo using YAML is being removed. Your existing YAML configuration has been imported into the UI automatically. Remove the Drivvo YAML configuration from your configuration.yaml file to resolve this issue."
     },
     "import_already_configured": {
       "title": "Account {email} already exists",
       "description": "Account {email} already exists and therefore was not imported.\n\nYou can remove the configuration from your `configuration.yaml` file."
     },
     "vehicle_non_existent": {
-      "title": "The vehicle ID {vehicle} does not exist in the Drivvo app",
-      "description": "The vehicle ID {vehicle} does not exist, it may have been deleted.\n\nGo to the integration configuration options and remove the vehicle."
+      "title": "Vehicle not found",
+      "description": "The vehicle {vehicle} could not be found in your Drivvo account."
     }
   },
   "options": {
@@ -121,7 +191,7 @@
         }
       }
     },
-    "abort":{
+    "abort": {
       "changes_successful": "Changes successfully saved."
     },
     "error": {
