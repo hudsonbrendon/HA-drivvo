@@ -137,6 +137,22 @@ async def get_data_vehicle(hass, user, password, id_vehicle):
         token=True,
     )
     if token:
+        url = BASE_URL.format(f"configuracao")
+        response_config = await hass.async_add_executor_job(get)
+        if response_config.ok:
+            api_data_config = response_config.json()
+        else:
+            api_data_config = None
+
+        currency = api_data_config[0].get("formato_valor", None)
+
+        _LOGGER.debug(
+            "API Response config: %s (currency=%s)",
+            id_vehicle,
+            api_data_config,
+            currency,
+        )
+
         url = BASE_URL.format(f"veiculo/{id_vehicle}")
         response_vehicle = await hass.async_add_executor_job(get)
         if response_vehicle.ok:
@@ -161,22 +177,6 @@ async def get_data_vehicle(hass, user, password, id_vehicle):
             api_data_refuellings,
         )
 
-        url = BASE_URL.format(f"configuracao")
-        response_config = await hass.async_add_executor_job(get)
-        if response_config.ok:
-            api_data_config = response_config.json()
-        else:
-            api_data_config = None
-            
-        currency = api_data_config.get("formato_valor", "USD")
-        
-        _LOGGER.debug(
-            "API Response config: %s (currency=%s)",
-            id_vehicle,
-            api_data_config,
-            currency,
-        )
-        
         url = BASE_URL.format(f"veiculo/{id_vehicle}/servico/web")
         response_services = await hass.async_add_executor_job(get)
         if response_services.ok:
