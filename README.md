@@ -2,7 +2,7 @@
 [![hacs_badge](https://img.shields.io/badge/HACS-Default-41BDF5.svg)](https://github.com/hacs/integration)
 [![hassfest](https://github.com/hudsonbrendon/HA-drivvo/actions/workflows/hassfest.yaml/badge.svg)](https://github.com/hudsonbrendon/HA-drivvo/actions/workflows/hassfest.yaml)
 [![HACS Action](https://github.com/hudsonbrendon/HA-drivvo/actions/workflows/hacs.yaml/badge.svg)](https://github.com/hudsonbrendon/HA-drivvo/actions/workflows/hacs.yaml)
-[![Dependabot Updates](https://github.com/hudsonbrendon/HA-drivvo/actions/workflows/dependabot/dependabot-updates/badge.svg)](https://github.com/hudsonbrendon/HA-drivvo/actions/workflows/dependabot/dependabot-updates)
+[![Dependabot Updates](https://github.com/hudsonbrendon/HA-drivvo/actions/workflows/dependabot/dependabot-updates/badge.svg)](https://github.com/hudsonbrendon/HA-drivvo/actions/workflows/dependabot-updates)
 
 # Drivvo Custom Integration Home Assistant
 
@@ -47,6 +47,29 @@ If the button above doesn't work, you can also perform the following steps manua
 * In the list, search and select `Drivvo`.
 * Follow the on-screen instructions to complete the setup.
 
+## Available Sensors
+
+After the integration is set up, the following sensors will be available for each configured vehicle:
+
+- **Vehicle**: Vehicle name and model
+- **Odometer**: Current vehicle odometer reading
+- **Odometer Date**: Date of last odometer update
+- **Refuelling Total**: Number of total refuelling events
+- **Refuelling Last Average**: Last fuel consumption average
+- **Refuelling General Average**: General fuel consumption average
+- **Refuelling Station**: Last refuelling station used
+- **Refuelling Type**: Type of fuel used
+- **Refuelling Reason**: Reason for the last refuelling
+- **Refuelling Date**: Date of last refuelling
+- **Refuelling Value**: Cost of last refuelling
+- **Refuelling Price**: Price per liter/gallon of last refuelling
+- **Refuelling Value Total**: Total cost of all refuellings
+- **Refuelling Tank Full**: Whether the tank was filled completely
+- **Refuelling Distance**: Distance traveled since last refuelling
+- **Refuelling Price Lowest**: Lowest fuel price recorded
+- **Refuelling Volume**: Volume of fuel in last refuelling
+- **Refuelling Volume Total**: Total volume of fuel refuelled
+
 ## Debugging
 
 To enable debug for Drivvo integration, add following to your `configuration.yaml`:
@@ -57,146 +80,96 @@ logger:
     custom_components.drivvo: debug
 ```
 
-## Make a card
+## Making a Dashboard Card
 
-To view drivvo information, follow an example of a card. Remember to replace the entities present on the card with your entities.
-
+Here's an example of a dashboard card using the new sensors. Replace the entity IDs with your own vehicle entities:
 
 ```yaml
-type: custom:config-template-card
-entities:
-  - sensor.nissan_march_abastecimento
-card:
-  type: entities
-  show_header_toggle: 'off'
-  style: |
-    .card-header {
-      padding: 0px 0px 0px 0px !important;
-    }
-  entities:
-    - type: custom:hui-vertical-stack-card
-      cards:
-        - type: horizontal-stack
-          cards:
-            - type: picture
-              style: |
-                ha-card {
-                    --paper-card-background-color: 'rgba(0, 0, 0, 0.0)';
-                    --ha-card-background: "rgba(0, 0, 0, 0.0)";
-                    --ha-card-box-shadow: 'none';
-                }
-              image: /local/images/nissan.png
-            - type: custom:button-card
-              layout: icon_name_state2nd
-              show_icon: true
-              show_state: true
-              styles:
-                grid:
-                  - grid-template-columns: 50px auto
-                icon:
-                  - padding: 0px 0px
-                  - height: 100px
-                  - width: 30px
-                card:
-                  - '--ha-card-background': rgba(0, 0, 0, 0.0)
-                  - '--ha-card-box-shadow': none
-                state:
-                  - padding: 0px 10px
-                  - justify-self: start
-                  - font-family: Roboto, sans-serif
-                  - font-size: 15px
-                name:
-                  - padding: 0px 10px
-                  - justify-self: start
-                  - color: var(--secondary-text-color)
-              entity: device_tracker.nissan_march
-              name: Localização
-              icon: mdi:car
-        - type: custom:bar-card
-          show_icon: true
-          align: split
-          columns: 1
-          max: 41
-          positions:
-            icon: inside
-            indicator: inside
-            name: inside
-            value: inside
-          unit_of_measurement: Litros
-          animation: 'on'
-          severity:
-            - color: '#fd0000'
-              from: 1
-              to: 19
-            - color: '#ffaa00'
-              from: 20
-              to: 29
-            - color: '#2CE026'
-              from: 30
-              to: 41
-          style: |
-            ha-card {
-                --paper-card-background-color: 'rgba(0, 0, 0, 0.0)';
-                --ha-card-background: "rgba(0, 0, 0, 0.0)";
-                --paper-item-icon-color: 'var(--text-primary-color';
-                --ha-card-box-shadow: 'none';
-            }
-          entities:
-            - entity: sensor.nissan_march_abastecimento
-              attribute: volume_de_combustivel
-          name: Volume de combustível
-          entity_row: true
-        - type: custom:apexcharts-card
-          chart_type: line
-          header:
-            title: Nissan March
-            show: true
-            show_states: true
-            colorize_states: true
-          series:
-            - entity: sensor.nissan_march_abastecimento
-              attribute: odometro
-              type: column
-              name: Odômetro
-              unit: km
-            - entity: sensor.nissan_march_abastecimento
-              attribute: preco_do_combustivel
-              type: column
-              name: Preço atual da gasolina
-              unit: R$
-              float_precision: 2
-            - entity: sensor.nissan_march_abastecimento
-              attribute: valor_total_pago
-              type: column
-              name: Valor total pago
-              unit: R$
-              float_precision: 2
-            - entity: sensor.nissan_march_abastecimento
-              attribute: soma_total_de_valores_pagos_em_todos_os_abastecimentos
-              type: column
-              name: Total pago em todos os abestecimentos até então
-              unit: R$
-              float_precision: 2
-            - entity: sensor.nissan_march_abastecimento
-              attribute: km_percorridos_desde_o_ultimo_abastecimento
-              type: column
-              name: Kms percorridos desde o último abastecimento
-              unit: Km
-            - entity: sensor.gasolina_media_natal
-              type: column
-              name: Preço médio da gasolina
-              unit: R$
-              float_precision: 2
-            - entity: sensor.nissan_march_abastecimento
-              type: column
-              name: Abastecimentos
-              unit: Abastecimentos
+type: vertical-stack
+cards:
+  - type: entities
+    title: Vehicle Information
+    entities:
+      - entity: sensor.my_vehicle
+      - entity: sensor.odometer
+      - entity: sensor.odometer_date
+      - entity: sensor.refuelling_total
+
+  - type: horizontal-stack
+    cards:
+      - type: gauge
+        name: Fuel Efficiency
+        entity: sensor.refuelling_general_average
+        min: 0
+        max: 20
+        severity:
+          green: 12
+          yellow: 8
+          red: 0
+
+      - type: gauge
+        name: Last Refuelling
+        entity: sensor.refuelling_volume
+        min: 0
+        max: 60
+        unit: L
+        severity:
+          green: 0
+          yellow: 30
+          red: 50
+
+  - type: history-graph
+    title: Fuel Price History
+    entities:
+      - entity: sensor.refuelling_price
+      - entity: sensor.refuelling_price_lowest
+    hours_to_show: 168
+    refresh_interval: 0
+
+  - type: statistics-graph
+    title: Refuelling Costs
+    entities:
+      - entity: sensor.refuelling_value
+    period: month
+    stat_types:
+      - mean
+      - sum
 ```
 
-After setup, the card above will look like this:
+A more complex example with multiple visualizations:
 
-![image](https://user-images.githubusercontent.com/5201888/201997053-d025824d-11e2-4e53-8dcf-e011d1b267f2.png)
-
+```yaml
+type: custom:apexcharts-card
+chart_type: line
+header:
+  title: Vehicle Statistics
+  show: true
+  show_states: true
+  colorize_states: true
+series:
+  - entity: sensor.odometer
+    name: Odometer
+    unit: km
+  - entity: sensor.refuelling_price
+    name: Fuel Price
+    unit: €
+    float_precision: 2
+  - entity: sensor.refuelling_value
+    name: Refuelling Cost
+    unit: €
+    float_precision: 2
+  - entity: sensor.refuelling_value_total
+    name: Total Cost
+    unit: €
+    float_precision: 2
+  - entity: sensor.refuelling_distance
+    name: Distance Between Refuellings
+    unit: km
+  - entity: sensor.refuelling_general_average
+    name: Fuel Efficiency
+    unit: km/L
+    float_precision: 2
+```
 
 ![logo.png](logo.png)
 
