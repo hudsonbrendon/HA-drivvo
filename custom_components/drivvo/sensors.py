@@ -69,6 +69,7 @@ SENSOR_TYPES: tuple[DrivvoSensorEntityDescription, ...] = (
         state_class=SensorStateClass.MEASUREMENT,
         native_unit_of_measurement=UnitOfFuelEfficiency.KILOMETERS_PER_LITER,
         value_fn=lambda data: data.refuelling_last_average,
+        suggested_display_precision=2,
     ),
     DrivvoSensorEntityDescription(
         key="refuelling_general_average",
@@ -79,6 +80,7 @@ SENSOR_TYPES: tuple[DrivvoSensorEntityDescription, ...] = (
         state_class=SensorStateClass.MEASUREMENT,
         native_unit_of_measurement=UnitOfFuelEfficiency.KILOMETERS_PER_LITER,
         value_fn=lambda data: data.refuelling_general_average,
+        suggested_display_precision=2,
     ),
     DrivvoSensorEntityDescription(
         key="refuelling_station",
@@ -118,6 +120,7 @@ SENSOR_TYPES: tuple[DrivvoSensorEntityDescription, ...] = (
         state_class=SensorStateClass.TOTAL,
         native_unit_of_measurement=CURRENCY_EURO,
         value_fn=lambda data: data.refuelling_value,
+        suggested_display_precision=2,
     ),
     DrivvoSensorEntityDescription(
         key="refuelling_price",
@@ -128,6 +131,7 @@ SENSOR_TYPES: tuple[DrivvoSensorEntityDescription, ...] = (
         state_class=SensorStateClass.MEASUREMENT,
         native_unit_of_measurement=CURRENCY_EURO,
         value_fn=lambda data: data.refuelling_price,
+        suggested_display_precision=2,
     ),
     DrivvoSensorEntityDescription(
         key="refuelling_value_total",
@@ -138,6 +142,7 @@ SENSOR_TYPES: tuple[DrivvoSensorEntityDescription, ...] = (
         state_class=SensorStateClass.TOTAL,
         native_unit_of_measurement=CURRENCY_EURO,
         value_fn=lambda data: data.refuelling_value_total,
+        suggested_display_precision=2,
     ),
     DrivvoSensorEntityDescription(
         key="refuelling_tank_full",
@@ -165,6 +170,7 @@ SENSOR_TYPES: tuple[DrivvoSensorEntityDescription, ...] = (
         state_class=SensorStateClass.MEASUREMENT,
         native_unit_of_measurement=CURRENCY_EURO,
         value_fn=lambda data: data.refuelling_price_lowest,
+        suggested_display_precision=2,
     ),
     DrivvoSensorEntityDescription(
         key="refuelling_volume",
@@ -175,6 +181,7 @@ SENSOR_TYPES: tuple[DrivvoSensorEntityDescription, ...] = (
         state_class=SensorStateClass.MEASUREMENT,
         native_unit_of_measurement=UnitOfVolume.LITERS,
         value_fn=lambda data: data.refuelling_volume,
+        suggested_display_precision=2,
     ),
     DrivvoSensorEntityDescription(
         key="refuelling_volume_total",
@@ -185,5 +192,6 @@ SENSOR_TYPES: tuple[DrivvoSensorEntityDescription, ...] = (
         state_class=SensorStateClass.TOTAL,
         native_unit_of_measurement=UnitOfVolume.LITERS,
         value_fn=lambda data: data.refuelling_volume_total,
+        suggested_display_precision=2,
     ),
 )
