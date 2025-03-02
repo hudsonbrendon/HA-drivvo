@@ -137,7 +137,7 @@ async def get_data_vehicle(hass, user, password, id_vehicle):
         token=True,
     )
     if token:
-        url = BASE_URL.format(f"veiculo/{id_vehicle}")
+        url = f"{BASE_URL}/veiculo/{id_vehicle}"
         response_vehicle = await hass.async_add_executor_job(get)
         if response_vehicle.ok:
             api_data_vehicle = response_vehicle.json()
@@ -147,7 +147,7 @@ async def get_data_vehicle(hass, user, password, id_vehicle):
             "API Response Data Vehicle %s - Vehicle: %s", id_vehicle, api_data_vehicle
         )
 
-        url = BASE_URL.format(f"veiculo/{id_vehicle}/abastecimento/web")
+        url = f"{BASE_URL}/veiculo/{id_vehicle}/abastecimento/web"
         response_refuelling = await hass.async_add_executor_job(get)
         if response_refuelling.ok:
             api_data_refuellings = sorted(
@@ -161,7 +161,7 @@ async def get_data_vehicle(hass, user, password, id_vehicle):
             api_data_refuellings,
         )
 
-        url = BASE_URL.format(f"veiculo/{id_vehicle}/servico/web")
+        url = f"{BASE_URL}/veiculo/{id_vehicle}/servico/web"
         response_services = await hass.async_add_executor_job(get)
         if response_services.ok:
             api_data_services = sorted(
@@ -173,7 +173,7 @@ async def get_data_vehicle(hass, user, password, id_vehicle):
             "API Response Data Vehicle %s - Services: %s", id_vehicle, api_data_services
         )
 
-        url = BASE_URL.format(f"veiculo/{id_vehicle}/despesa/web")
+        url = f"{BASE_URL}/veiculo/{id_vehicle}/despesa/web"
         response_expenses = await hass.async_add_executor_job(get)
         if response_expenses.ok:
             api_data_expenses = sorted(
