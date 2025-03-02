@@ -101,7 +101,8 @@ async def auth(
         return True
 
     return False
-    
+
+
 async def get_vehicles(
     hass,
     token: bool | None = False,
@@ -118,6 +119,7 @@ async def get_vehicles(
     if response.ok:
         return response.json()
     return None
+
 
 async def get_data_vehicle(hass, user, password, id_vehicle):
     """Get The request from the api."""
@@ -166,7 +168,7 @@ async def get_data_vehicle(hass, user, password, id_vehicle):
         else:
             api_data_config = None
             
-        currency = config.get("formato_valor", "USD")
+        currency = api_data_config.get("formato_valor", "USD")
         
         _LOGGER.debug(
             "API Response config: %s (currency=%s)",
@@ -439,4 +441,3 @@ class DrivvoDataVehicle:
     distance_unit: str
     refuelling_volume_total: float | None
     currency: str | None
-    
