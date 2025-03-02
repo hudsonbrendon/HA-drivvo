@@ -101,25 +101,6 @@ async def auth(
         return True
 
     return False
-
-async def get_currency(
-    hass,
-    token: bool | None = False,
-) -> bool:
-    def get():
-        return requests.get(
-            "https://api.drivvo.com/configuracao",
-            headers={"x-token": token},
-        )
-
-    response = await hass.async_add_executor_job(get)
-    _LOGGER.debug("API Response config: %s", response.json())
-
-    if response.ok:
-        if "formarto_valor" in (config := response.json()):
-            currency = config.get("formato_valor", "USD")
-        return currency
-    return "USD"
     
 async def get_vehicles(
     hass,
@@ -178,6 +159,22 @@ async def get_data_vehicle(hass, user, password, id_vehicle):
             api_data_refuellings,
         )
 
+        url = BASE_URL.format(f"configuracao")
+        response_config = await hass.async_add_executor_job(get)
+        if response_config.ok:
+            api_data_config = response_config.json()
+        else:
+            api_data_config = None
+            
+        currency = config.get("formato_valor", "USD")
+        
+        _LOGGER.debug(
+            "API Response config: %s (currency=%s)",
+            id_vehicle,
+            api_data_config,
+            currency,
+        )
+        
         url = BASE_URL.format(f"veiculo/{id_vehicle}/servico/web")
         response_services = await hass.async_add_executor_job(get)
         if response_services.ok:
@@ -406,6 +403,7 @@ async def get_data_vehicle(hass, user, password, id_vehicle):
             refuelling_price_lowest=refuelling_price_lowest,
             refuelling_volume=refuelling_volume,
             refuelling_volume_total=refuelling_volume_total,
+            currency=currency,
         )
 
         _LOGGER.debug("API Response Data Vehicle - Refuelling: %s", data_return)
@@ -440,3 +438,5 @@ class DrivvoDataVehicle:
     refuelling_price_lowest: float | None
     distance_unit: str
     refuelling_volume_total: float | None
+    currency: str | None
+    
