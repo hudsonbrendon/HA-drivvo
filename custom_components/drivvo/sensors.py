@@ -13,9 +13,9 @@ from homeassistant.components.sensor import (
 from homeassistant.const import (
     UnitOfLength,
     UnitOfVolume,
-    CURRENCY_EURO,
 )
 
+from . import DrivvoDataVehicle
 from .units import UnitOfFuelEfficiency
 
 
@@ -24,6 +24,7 @@ class DrivvoSensorEntityDescription(SensorEntityDescription):
     """Class describing Drivvo sensor entities."""
 
     value_fn: Optional[Callable] = None
+    unit_fn: Callable[[DrivvoDataVehicle], str] | None = None
 
 
 SENSOR_TYPES: tuple[DrivvoSensorEntityDescription, ...] = (
@@ -118,7 +119,7 @@ SENSOR_TYPES: tuple[DrivvoSensorEntityDescription, ...] = (
         icon="mdi:cash",
         device_class=SensorDeviceClass.MONETARY,
         state_class=SensorStateClass.TOTAL,
-        native_unit_of_measurement=CURRENCY_EURO,
+        unit_fn=lambda data: data.currency,
         value_fn=lambda data: data.refuelling_value,
         suggested_display_precision=2,
     ),
@@ -129,7 +130,7 @@ SENSOR_TYPES: tuple[DrivvoSensorEntityDescription, ...] = (
         icon="mdi:cash",
         device_class=SensorDeviceClass.MONETARY,
         state_class=SensorStateClass.MEASUREMENT,
-        native_unit_of_measurement=CURRENCY_EURO,
+        unit_fn=lambda data: data.currency,
         value_fn=lambda data: data.refuelling_price,
         suggested_display_precision=2,
     ),
@@ -140,7 +141,7 @@ SENSOR_TYPES: tuple[DrivvoSensorEntityDescription, ...] = (
         icon="mdi:cash",
         device_class=SensorDeviceClass.MONETARY,
         state_class=SensorStateClass.TOTAL,
-        native_unit_of_measurement=CURRENCY_EURO,
+        unit_fn=lambda data: data.currency,
         value_fn=lambda data: data.refuelling_value_total,
         suggested_display_precision=2,
     ),
@@ -168,7 +169,7 @@ SENSOR_TYPES: tuple[DrivvoSensorEntityDescription, ...] = (
         icon="mdi:cash",
         device_class=SensorDeviceClass.MONETARY,
         state_class=SensorStateClass.MEASUREMENT,
-        native_unit_of_measurement=CURRENCY_EURO,
+        unit_fn=lambda data: data.currency,
         value_fn=lambda data: data.refuelling_price_lowest,
         suggested_display_precision=2,
     ),
