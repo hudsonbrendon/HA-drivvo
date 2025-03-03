@@ -224,3 +224,13 @@ class DrivvoSensorEntity(CoordinatorEntity, SensorEntity):
     def icon(self) -> str:
         """Return the icon."""
         return self.entity_description.icon or ICON
+
+    @property
+    def native_unit_of_measurement(self) -> str | None:
+        """Return the unit of measurement of this entity."""
+        if (
+            self.coordinator.data is not None
+            and self.entity_description.unit_fn is not None
+        ):
+            return self.entity_description.unit_fn(self.coordinator.data)
+        return self.entity_description.native_unit_of_measurement

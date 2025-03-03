@@ -137,7 +137,7 @@ async def get_data_vehicle(hass, user, password, id_vehicle):
         token=True,
     )
     if token:
-        url = BASE_URL.format(f"veiculo/{id_vehicle}")
+        url = f"{BASE_URL}/veiculo/{id_vehicle}"
         response_vehicle = await hass.async_add_executor_job(get)
         if response_vehicle.ok:
             api_data_vehicle = response_vehicle.json()
@@ -147,7 +147,7 @@ async def get_data_vehicle(hass, user, password, id_vehicle):
             "API Response Data Vehicle %s - Vehicle: %s", id_vehicle, api_data_vehicle
         )
 
-        url = BASE_URL.format(f"veiculo/{id_vehicle}/abastecimento/web")
+        url = f"{BASE_URL}/veiculo/{id_vehicle}/abastecimento/web"
         response_refuelling = await hass.async_add_executor_job(get)
         if response_refuelling.ok:
             api_data_refuellings = sorted(
@@ -161,7 +161,7 @@ async def get_data_vehicle(hass, user, password, id_vehicle):
             api_data_refuellings,
         )
 
-        url = BASE_URL.format(f"veiculo/{id_vehicle}/servico/web")
+        url = f"{BASE_URL}/veiculo/{id_vehicle}/servico/web"
         response_services = await hass.async_add_executor_job(get)
         if response_services.ok:
             api_data_services = sorted(
@@ -173,7 +173,7 @@ async def get_data_vehicle(hass, user, password, id_vehicle):
             "API Response Data Vehicle %s - Services: %s", id_vehicle, api_data_services
         )
 
-        url = BASE_URL.format(f"veiculo/{id_vehicle}/despesa/web")
+        url = f"{BASE_URL}/veiculo/{id_vehicle}/despesa/web"
         response_expenses = await hass.async_add_executor_job(get)
         if response_expenses.ok:
             api_data_expenses = sorted(
@@ -214,6 +214,7 @@ async def get_data_vehicle(hass, user, password, id_vehicle):
         refuelling_price_lowest = None
         refuelling_volume = None
         refuelling_volume_total = None
+        currency = None
 
         refuellings_odometers = []
         if len(api_data_refuellings) > 0:
@@ -364,6 +365,23 @@ async def get_data_vehicle(hass, user, password, id_vehicle):
             odometer_last = odometers[0]["odometro"]
             odometer_date_last = odometers[0]["data"]
 
+        url = BASE_URL.format("configuracao")
+        response_config = await hass.async_add_executor_job(get)
+        if response_config.ok:
+            api_data_config = response_config.json()
+            api_data_config = api_data_config[0]
+        else:
+            api_data_config = None
+
+        if api_data_config is not None:
+            currency = api_data_config.get("formato_valor", None)
+
+        _LOGGER.debug(
+            "API Response config: %s (currency=%s)",
+            api_data_config,
+            currency,
+        )
+
         data_return = DrivvoDataVehicle(
             id=id_vehicle,
             name=name,
@@ -389,6 +407,7 @@ async def get_data_vehicle(hass, user, password, id_vehicle):
             refuelling_price_lowest=refuelling_price_lowest,
             refuelling_volume=refuelling_volume,
             refuelling_volume_total=refuelling_volume_total,
+            currency=currency,
         )
 
         _LOGGER.debug("API Response Data Vehicle - Refuelling: %s", data_return)
@@ -423,3 +442,4 @@ class DrivvoDataVehicle:
     refuelling_price_lowest: float | None
     distance_unit: str
     refuelling_volume_total: float | None
+    currency: str | None
