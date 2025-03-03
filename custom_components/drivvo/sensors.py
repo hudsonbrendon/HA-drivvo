@@ -193,4 +193,14 @@ SENSOR_TYPES: tuple[DrivvoSensorEntityDescription, ...] = (
         value_fn=lambda data: data.refuelling_volume_total,
         suggested_display_precision=2,
     ),
+    DrivvoSensorEntityDescription(
+        key="odometer",
+        translation_key="odometer",
+        name="Odometer",
+        icon="mdi:counter",
+        device_class=SensorDeviceClass.DISTANCE,
+        state_class=SensorStateClass.TOTAL,
+        native_unit_of_measurement=UnitOfDistance.KILOMETERS,
+        value_fn=lambda data: data.odometer,
+    ),
 )
