@@ -363,7 +363,7 @@ async def get_data_vehicle(hass, user, password, id_vehicle):
             odometer_last = odometers[0]["odometro"]
             odometer_date_last = odometers[0]["data"]
 
-        url = BASE_URL.format("configuracao")
+        url = f"{BASE_URL}/configuracao"
         response_config = await hass.async_add_executor_job(get)
         if response_config.ok:
             try:
