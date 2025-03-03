@@ -366,13 +366,29 @@ async def get_data_vehicle(hass, user, password, id_vehicle):
         url = BASE_URL.format("configuracao")
         response_config = await hass.async_add_executor_job(get)
         if response_config.ok:
-            api_data_config = response_config.json()
-            api_data_config = api_data_config[0]
+            try:
+                api_data_config = response_config.json()
+                if isinstance(api_data_config, list) and len(api_data_config) > 0:
+                    api_data_config = api_data_config[0]
+                    if isinstance(api_data_config, dict):
+                        currency = api_data_config.get("formato_valor", None)
+                    else:
+                        _LOGGER.warning(
+                            "API config data is not a dictionary: %s", api_data_config
+                        )
+                        currency = None
+                else:
+                    _LOGGER.warning(
+                        "API config data is not a list or is empty: %s", api_data_config
+                    )
+                    currency = None
+            except Exception as e:
+                _LOGGER.error("Failed to parse API config data: %s", e)
+                api_data_config = None
+                currency = None
         else:
             api_data_config = None
-
-        if api_data_config is not None:
-            currency = api_data_config.get("formato_valor", None)
+            currency = None
 
         _LOGGER.debug(
             "API Response config: %s (currency=%s)",
