@@ -7,9 +7,9 @@
   ],
   "config_flow": true,
   "dependencies": [],
-  "documentation": "https://github.com/hudsonbrendon/sensor.drivvo#readme",
+  "documentation": "https://github.com/hudsonbrendon/HA-drivvo#readme",
   "iot_class": "cloud_polling",
-  "issue_tracker": "https://github.com/hudsonbrendon/sensor.drivvo/issues",
+  "issue_tracker": "https://github.com/hudsonbrendon/HA-drivvo/issues",
   "requirements": [],
   "version": "2.1.1"
 }
