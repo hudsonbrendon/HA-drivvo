@@ -3,7 +3,7 @@ from typing import Any
 from datetime import datetime
 import pytz
 
-import voluptuous as vol  # Add this import which was missing
+import voluptuous as vol
 
 from homeassistant import config_entries, core
 from homeassistant.components.sensor import (
@@ -55,28 +55,39 @@ async def async_setup_entry(
     config = hass.data[DOMAIN][config_entry.entry_id]
     entities = []
 
+    # Make sure we have a place to store coordinators
+    hass.data.setdefault(f"{DOMAIN}_coordinators", {})
+
     for vehicle in config[CONF_VEHICLES]:
-        if (
-            vehicle_data := await get_data_vehicle(
+        # Create a unique update method for this specific vehicle
+        async def _update_for_vehicle(vehicle_id=vehicle):
+            return await get_data_vehicle(
                 hass,
                 user=config[CONF_EMAIL],
                 password=config[CONF_PASSWORD],
-                id_vehicle=vehicle,
+                id_vehicle=vehicle_id,
             )
-        ) is not None:
+
+        # Get initial data for the vehicle
+        vehicle_data = await get_data_vehicle(
+            hass,
+            user=config[CONF_EMAIL],
+            password=config[CONF_PASSWORD],
+            id_vehicle=vehicle,
+        )
+
+        if vehicle_data is not None:
             # Create coordinator for data updates
             coordinator = DataUpdateCoordinator(
                 hass,
                 _LOGGER,
                 name=f"Drivvo {vehicle_data.identification}",
                 update_interval=SCAN_INTERVAL,
-                update_method=lambda: get_data_vehicle(
-                    hass,
-                    user=config[CONF_EMAIL],
-                    password=config[CONF_PASSWORD],
-                    id_vehicle=vehicle,
-                ),
+                update_method=_update_for_vehicle,
             )
+
+            # Store coordinator to prevent garbage collection
+            hass.data[f"{DOMAIN}_coordinators"][vehicle] = coordinator
 
             # Fetch initial data
             await coordinator.async_config_entry_first_refresh()
@@ -125,12 +136,13 @@ async def async_setup_platform(
     add_entities,
     discovery_info=False,
 ) -> bool:
-    # import to config flow
+    """Import to config flow."""
     _LOGGER.warning(
         "Configuration of Drivvo integration via YAML is deprecated."
         "Your configuration has been imported into the UI and can be"
         "removed from the configuration.yaml file."
     )
+
     async_create_issue(
         hass,
         DOMAIN,

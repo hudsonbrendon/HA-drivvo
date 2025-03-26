@@ -34,6 +34,9 @@ async def async_setup_entry(
         hass.data.setdefault(DOMAIN, {})
         hass.data[DOMAIN][entry.entry_id] = entry.data
 
+        # Initialize coordinators storage
+        hass.data.setdefault(f"{DOMAIN}_coordinators", {})
+
         await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
 
     else:
@@ -46,8 +49,14 @@ async def async_unload_entry(
 ) -> bool:
     """Unload a config entry."""
 
-    if unload_ok := await hass.config_entries.async_unload_platforms(entry, PLATFORMS):
+    unload_ok = await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
+
+    # Clean up coordinators when integration is unloaded
+    if unload_ok:
         hass.data[DOMAIN].pop(entry.entry_id)
+        if entry.entry_id in hass.data.get(f"{DOMAIN}_coordinators", {}):
+            hass.data[f"{DOMAIN}_coordinators"].pop(entry.entry_id)
+
     return unload_ok
 
 
