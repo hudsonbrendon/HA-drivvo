@@ -95,7 +95,7 @@ async def async_setup_entry(
             # Create sensor entities
             for description in SENSOR_TYPES:
                 if description.key == "vehicle":
-                    model = f"{vehicle_data.manufacturer}/{vehicle_data.model}"
+                    model = vehicle_data.model
                     entities.append(
                         DrivvoSensorEntity(
                             coordinator,
@@ -195,7 +195,7 @@ class DrivvoSensorEntity(CoordinatorEntity, SensorEntity):
             identifiers={(DOMAIN, vehicle_id)},
             name=vehicle_name,
             manufacturer="Drivvo",
-            model=f"{coordinator.data.manufacturer}/{coordinator.data.model}",
+            model=f"{coordinator.data.manufacturer} {coordinator.data.model}",
             sw_version="2.0.0",
         )
 
