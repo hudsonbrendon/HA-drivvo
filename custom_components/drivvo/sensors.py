@@ -111,6 +111,15 @@ SENSOR_TYPES: tuple[DrivvoSensorEntityDescription, ...] = (
         value_fn=lambda data: data.refuelling_date,
     ),
     DrivvoSensorEntityDescription(
+        key="refuelling_odometer",
+        translation_key="refuelling_odometer",
+        name="Refuelling Odometer",
+        icon="mdi:speedometer",
+        device_class=SensorDeviceClass.DISTANCE,
+        native_unit_of_measurement=UnitOfLength.KILOMETERS,
+        value_fn=lambda data: data.refuelling_odometer,
+    ),
+    DrivvoSensorEntityDescription(
         key="refuelling_value",
         translation_key="refuelling_value",
         name="Refuelling Value",

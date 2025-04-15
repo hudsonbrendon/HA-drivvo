@@ -61,6 +61,7 @@ After the integration is set up, the following sensors will be available for eac
 - **Refuelling Type**: Type of fuel used
 - **Refuelling Reason**: Reason for the last refuelling
 - **Refuelling Date**: Date of last refuelling
+- **Refuelling Odometer**: Odometer of last refuelling
 - **Refuelling Value**: Cost of last refuelling
 - **Refuelling Price**: Price per liter/gallon of last refuelling
 - **Refuelling Value Total**: Total cost of all refuellings

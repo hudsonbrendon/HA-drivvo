@@ -65,6 +65,9 @@
           "refuelling_date": {
             "name": "Fecha de repostaje"
           },
+          "refuelling_odometer": {
+            "name": "Cuentakilómetros del repostaje"
+          },
           "refuelling_value": {
             "name": "Costo del repostaje"
           },
@@ -124,6 +127,9 @@
       },
       "refuelling_date": {
         "name": "Fecha de repostaje"
+      },
+      "refuelling_odometer": {
+        "name": "Cuentakilómetros del repostaje"
       },
       "refuelling_value": {
         "name": "Costo del repostaje"
