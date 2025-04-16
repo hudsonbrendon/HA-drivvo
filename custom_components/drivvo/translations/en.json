@@ -65,6 +65,9 @@
           "refuelling_date": {
             "name": "Date refuelling"
           },
+          "refuelling_odometer": {
+            "name": "Odometer refuelling"
+          },
           "refuelling_value": {
             "name": "Value refuelling"
           },
@@ -127,6 +130,9 @@
       },
       "refuelling_date": {
         "name": "Refuelling Date"
+      },
+      "refuelling_odometer": {
+        "name": "Refuelling Odometer"
       },
       "refuelling_value": {
         "name": "Refuelling Value"

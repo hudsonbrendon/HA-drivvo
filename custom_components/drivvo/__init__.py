@@ -207,6 +207,7 @@ async def get_data_vehicle(hass, user, password, id_vehicle):
             identification = f"{api_data_vehicle['marca']}/{api_data_vehicle['modelo']}"
 
         refuelling_date = None
+        refuelling_odometer = None
         refuelling_last_average = None
         refuelling_general_average = None
         refuelling_station = None
@@ -307,6 +308,7 @@ async def get_data_vehicle(hass, user, password, id_vehicle):
             refuelling_type = refuelling["combustivel"]
             refuelling_value = refuelling["valor_total"]
             refuelling_price = refuelling["preco"]
+            refuelling_odometer = refuelling["odometro"]
             if refuelling["volume"] != 0:
                 refuelling_volume = refuelling["volume"]
             else:
@@ -416,6 +418,7 @@ async def get_data_vehicle(hass, user, password, id_vehicle):
             manufacturer=api_data_vehicle["marca"],
             model=api_data_vehicle["modelo"],
             refuelling_date=refuelling_date,
+            refuelling_odometer=refuelling_odometer,
             refuelling_last_average=refuelling_last_average,
             refuelling_general_average=refuelling_general_average,
             refuelling_station=refuelling_station,
@@ -450,6 +453,7 @@ class DrivvoDataVehicle:
     manufacturer: str
     model: str
     refuelling_date: str | None
+    refuelling_odometer: int | None
     refuelling_last_average: float | None
     refuelling_general_average: float | None
     refuelling_station: str | None
