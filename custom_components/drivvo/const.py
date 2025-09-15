@@ -1,7 +1,7 @@
 from datetime import timedelta
 
 ICON = "mdi:gas-station"
-SCAN_INTERVAL = timedelta(hours=1)
+SCAN_INTERVAL = timedelta(days=1)
 ATTRIBUTION = "Data provided by drivvo api"
 DOMAIN = "drivvo"
 CONF_EMAIL = "email"
