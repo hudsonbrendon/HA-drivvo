@@ -23,11 +23,28 @@ PLATFORMS = [Platform.SENSOR]
 _LOGGER = logging.getLogger(__name__)
 
 
-def get_default_headers() -> dict[str, str]:
+def get_default_headers() -> dict:
     """Get default headers for Drivvo API requests."""
     return {
+        "Accept": "application/json, text/plain, */*",
+        "Accept-Encoding": "gzip, deflate, br, zstd",
+        "Accept-Language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
         "App-Platform": "HA-Drivvo",
         "App-Version": "1",
+        "Cache-Control": "no-cache",
+        "Content-Type": "application/json",
+        "Dnt": "1",
+        "Origin": "https://web.drivvo.com",
+        "Pragma": "no-cache",
+        "Priority": "u=1, i",
+        "Referer": "https://web.drivvo.com/",
+        "Sec-Ch-Ua": '"Chromium";v="140", "Not-A?Brand";v="24", "Microsoft Edge";v="140"',
+        "Sec-Ch-Ua-Mobile": "?0",
+        "Sec-Ch-Ua-Platform": '"macOS"',
+        "Sec-Fetch-Dest": "empty",
+        "Sec-Fetch-Mode": "cors",
+        "Sec-Fetch-Site": "same-site",
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0",
     }
 
 
