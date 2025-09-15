@@ -23,14 +23,14 @@ PLATFORMS = [Platform.SENSOR]
 _LOGGER = logging.getLogger(__name__)
 
 
-def get_default_headers():
+def get_default_headers() -> dict:
     """Get default headers for Drivvo API requests."""
     return {
         "Accept": "application/json, text/plain, */*",
         "Accept-Encoding": "gzip, deflate, br, zstd",
         "Accept-Language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
-        "App-Platform": "Web",
-        "App-Version": "3",
+        "App-Platform": "HA-Drivvo",
+        "App-Version": "1",
         "Cache-Control": "no-cache",
         "Content-Type": "application/json",
         "Dnt": "1",
