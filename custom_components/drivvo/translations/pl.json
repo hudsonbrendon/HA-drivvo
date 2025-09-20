@@ -1,0 +1,207 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Połącz się z Drivvo",
+        "description": "Wprowadź dane swojego konta:",
+        "data": {
+          "email": "Adres e-mail",
+          "password": "Hasło"
+        }
+      },
+      "vehicle": {
+        "description": "Wybierz pojazdy, które chcesz dodać do integracji:",
+        "data": {
+          "vehicles": "Pojazdy"
+        }
+      },
+      "reauth_confirm": {
+        "data": {
+          "email": "Adres e-mail",
+          "password": "Hasło"
+        }
+      }
+    },
+    "error": {
+      "auth_error": "Nieprawidłowe uwierzytelnienie",
+      "cannot_connect": "Nie udało się połączyć",
+      "invalid_auth": "Nieprawidłowe uwierzytelnienie",
+      "unknown": "Nieoczekiwany błąd"
+    },
+    "abort": {
+      "already_configured": "Konto jest już skonfigurowane",
+      "reauth_successful": "Ponowne uwierzytelnienie zakończone powodzeniem."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "refuellings": {
+        "name": "Tankowania",
+        "state_attributes": {
+          "vehicle": {
+            "name": "Pojazd"
+          },
+          "odometer": {
+            "name": "Ostatni odczyt licznika"
+          },
+          "odometer_date": {
+            "name": "Data ostatniego odczytu licznika"
+          },
+          "refuelling_last_average": {
+            "name": "Ostatnie średnie zużycie paliwa"
+          },
+          "refuelling_general_average": {
+            "name": "Ogólne średnie zużycie paliwa"
+          },
+          "refuelling_station": {
+            "name": "Stacja paliw"
+          },
+          "refuelling_type": {
+            "name": "Rodzaj paliwa"
+          },
+          "refuelling_reason": {
+            "name": "Powód tankowania"
+          },
+          "refuelling_date": {
+            "name": "Data tankowania"
+          },
+          "refuelling_odometer": {
+            "name": "Stan licznika przy tankowaniu"
+          },
+          "refuelling_value": {
+            "name": "Kwota tankowania"
+          },
+          "refuelling_price": {
+            "name": "Cena paliwa"
+          },
+          "refuelling_total": {
+            "name": "Łączna liczba tankowań"
+          },
+          "refuelling_value_total": {
+            "name": "Łączna wartość tankowań"
+          },
+          "refuelling_tank_full": {
+            "name": "Pełny bak",
+            "state": {
+              "false": "Nie",
+              "true": "Tak"
+            }
+          },
+          "refuelling_distance": {
+            "name": "Dystans od ostatniego tankowania"
+          },
+          "refuelling_price_lowest": {
+            "name": "Najniższa cena paliwa"
+          },
+          "refuelling_volume": {
+            "name": "Objętość ostatniego tankowania"
+          },
+          "refuelling_volume_total": {
+            "name": "Łączna ilość paliwa"
+          }
+        }
+      },
+      "refuelling_total": {
+        "name": "Łączna liczba tankowań"
+      },
+      "vehicle": {
+        "name": "Pojazd"
+      },
+      "odometer": {
+        "name": "Licznik"
+      },
+      "odometer_date": {
+        "name": "Data odczytu licznika"
+      },
+      "refuelling_last_average": {
+        "name": "Ostatnie średnie zużycie paliwa"
+      },
+      "refuelling_general_average": {
+        "name": "średnie zużycie paliwa"
+      },
+      "refuelling_station": {
+        "name": "Stacja paliw"
+      },
+      "refuelling_type": {
+        "name": "Rodzaj paliwa"
+      },
+      "refuelling_reason": {
+        "name": "Powód tankowania"
+      },
+      "refuelling_date": {
+        "name": "Data tankowania"
+      },
+      "refuelling_odometer": {
+        "name": "Stan licznika przy tankowaniu"
+      },
+      "refuelling_value": {
+        "name": "Kwota tankowania"
+      },
+      "refuelling_price": {
+        "name": "Cena paliwa"
+      },
+      "refuelling_value_total": {
+        "name": "Łączna wartość tankowań"
+      },
+      "refuelling_tank_full": {
+        "name": "Pełny bak"
+      },
+      "refuelling_distance": {
+        "name": "Dystans od ostatniego tankowania"
+      },
+      "refuelling_price_lowest": {
+        "name": "Najniższa cena paliwa"
+      },
+      "refuelling_volume": {
+        "name": "Objętość tankowania"
+      },
+      "refuelling_volume_total": {
+        "name": "Łączna ilość paliwa"
+      },
+      "odometer_value": {
+        "name": "Wartość licznika"
+      },
+      "odometer_avg_consumption": {
+        "name": "średnie zużycie z licznika"
+      },
+      "expenses": {
+        "name": "Wydatki"
+      },
+      "expenses_unic": {
+        "name": "Unikalne wydatki"
+      }
+    }
+  },
+  "issues": {
+    "yaml_deprecated": {
+      "title": "Konfiguracja Drivvo w YAML zostanie usunięta",
+      "description": "Konfiguracja Drivvo w YAML jest usuwana. Twoja istniejąca konfiguracja YAML została automatycznie zaimportowana do interfejsu. Usuń konfigurację Drivvo z pliku configuration.yaml, aby rozwiązać ten problem."
+    },
+    "import_already_configured": {
+      "title": "Konto {email} już istnieje",
+      "description": "Konto {email} już istnieje, dlatego nie zostało zaimportowane.\n\nMożesz usunąć konfigurację z pliku `configuration.yaml`."
+    },
+    "vehicle_non_existent": {
+      "title": "Nie znaleziono pojazdu",
+      "description": "Pojazdu {vehicle} nie znaleziono na Twoim koncie Drivvo."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "data": {
+          "email": "Adres e-mail",
+          "password": "Hasło",
+          "vehicles": "Pojazdy",
+          "no_vehicles": "Na tym koncie nie ma aktywnych pojazdów."
+        }
+      }
+    },
+    "abort": {
+      "changes_successful": "Zmiany zostały zapisane."
+    },
+    "error": {
+      "auth_error": "Nieprawidłowe uwierzytelnienie"
+    }
+  }
+}
