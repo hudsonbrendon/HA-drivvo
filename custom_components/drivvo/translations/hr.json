@@ -1,0 +1,207 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Poveži se s Drivvo",
+        "description": "Unesite podatke svog računa:",
+        "data": {
+          "email": "E-mail",
+          "password": "Lozinka"
+        }
+      },
+      "vehicle": {
+        "description": "Odaberite vozila koja želite dodati u integraciju:",
+        "data": {
+          "vehicles": "Vozila"
+        }
+      },
+      "reauth_confirm": {
+        "data": {
+          "email": "E-mail",
+          "password": "Lozinka"
+        }
+      }
+    },
+    "error": {
+      "auth_error": "Neispravna autentifikacija",
+      "cannot_connect": "Neuspjelo povezivanje",
+      "invalid_auth": "Neispravna autentifikacija",
+      "unknown": "Neočekivana greška"
+    },
+    "abort": {
+      "already_configured": "Račun je već konfiguriran",
+      "reauth_successful": "Ponovna autentifikacija uspješna."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "refuellings": {
+        "name": "Točenja goriva",
+        "state_attributes": {
+          "vehicle": {
+            "name": "Vozilo"
+          },
+          "odometer": {
+            "name": "Posljednje stanje kilometara"
+          },
+          "odometer_date": {
+            "name": "Datum posljednjeg očitanja"
+          },
+          "refuelling_last_average": {
+            "name": "Zadnja prosječna potrošnja"
+          },
+          "refuelling_general_average": {
+            "name": "Opća prosječna potrošnja"
+          },
+          "refuelling_station": {
+            "name": "Benzinska postaja"
+          },
+          "refuelling_type": {
+            "name": "Vrsta goriva"
+          },
+          "refuelling_reason": {
+            "name": "Razlog točenja"
+          },
+          "refuelling_date": {
+            "name": "Datum točenja"
+          },
+          "refuelling_odometer": {
+            "name": "Kilometraža pri točenju"
+          },
+          "refuelling_value": {
+            "name": "Iznos točenja"
+          },
+          "refuelling_price": {
+            "name": "Cijena goriva"
+          },
+          "refuelling_total": {
+            "name": "Ukupan broj točenja"
+          },
+          "refuelling_value_total": {
+            "name": "Ukupna vrijednost točenja"
+          },
+          "refuelling_tank_full": {
+            "name": "Pun spremnik",
+            "state": {
+              "false": "Ne",
+              "true": "Da"
+            }
+          },
+          "refuelling_distance": {
+            "name": "Prijeđena udaljenost od zadnjeg točenja"
+          },
+          "refuelling_price_lowest": {
+            "name": "Najjeftinije gorivo"
+          },
+          "refuelling_volume": {
+            "name": "Količina zadnjeg točenja"
+          },
+          "refuelling_volume_total": {
+            "name": "Ukupna količina točenja"
+          }
+        }
+      },
+      "refuelling_total": {
+        "name": "Ukupno točenja"
+      },
+      "vehicle": {
+        "name": "Vozilo"
+      },
+      "odometer": {
+        "name": "Kilometar sat"
+      },
+      "odometer_date": {
+        "name": "Datum očitanja"
+      },
+      "refuelling_last_average": {
+        "name": "Zadnja prosječna potrošnja"
+      },
+      "refuelling_general_average": {
+        "name": "Opća prosječna potrošnja"
+      },
+      "refuelling_station": {
+        "name": "Benzinska postaja"
+      },
+      "refuelling_type": {
+        "name": "Vrsta goriva"
+      },
+      "refuelling_reason": {
+        "name": "Razlog točenja"
+      },
+      "refuelling_date": {
+        "name": "Datum točenja"
+      },
+      "refuelling_odometer": {
+        "name": "Kilometraža pri točenju"
+      },
+      "refuelling_value": {
+        "name": "Iznos točenja"
+      },
+      "refuelling_price": {
+        "name": "Cijena goriva"
+      },
+      "refuelling_value_total": {
+        "name": "Ukupna vrijednost točenja"
+      },
+      "refuelling_tank_full": {
+        "name": "Pun spremnik"
+      },
+      "refuelling_distance": {
+        "name": "Prijeđena udaljenost"
+      },
+      "refuelling_price_lowest": {
+        "name": "Najniža cijena goriva"
+      },
+      "refuelling_volume": {
+        "name": "Količina točenja"
+      },
+      "refuelling_volume_total": {
+        "name": "Ukupna količina točenja"
+      },
+      "odometer_value": {
+        "name": "Stanje kilometara"
+      },
+      "odometer_avg_consumption": {
+        "name": "Prosječna potrošnja"
+      },
+      "expenses": {
+        "name": "Troškovi"
+      },
+      "expenses_unic": {
+        "name": "Jedinstveni troškovi"
+      }
+    }
+  },
+  "issues": {
+    "yaml_deprecated": {
+      "title": "Drivvo YAML konfiguracija se uklanja",
+      "description": "Konfiguracija Drivvo pomoću YAML-a se uklanja. Vaša postojeća YAML konfiguracija je automatski uvezena u korisničko sučelje. Uklonite Drivvo YAML konfiguraciju iz svoje configuration.yaml datoteke kako biste riješili ovaj problem."
+    },
+    "import_already_configured": {
+      "title": "Račun {email} već postoji",
+      "description": "Račun {email} već postoji i stoga nije uvezen.\n\nMožete ukloniti konfiguraciju iz svoje `configuration.yaml` datoteke."
+    },
+    "vehicle_non_existent": {
+      "title": "Vozilo nije pronađeno",
+      "description": "Vozilo {vehicle} nije pronađeno u vašem Drivvo računu."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "data": {
+          "email": "E-mail",
+          "password": "Lozinka",
+          "vehicles": "Vozila",
+          "no_vehicles": "Na ovom računu nema aktivnih vozila."
+        }
+      }
+    },
+    "abort": {
+      "changes_successful": "Promjene su uspješno spremljene."
+    },
+    "error": {
+      "auth_error": "Neispravna autentifikacija"
+    }
+  }
+}
